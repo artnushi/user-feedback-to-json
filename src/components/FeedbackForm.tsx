@@ -10,7 +10,7 @@ export const FeedbackForm = () => {
 
     const {
         register,
-        formState: { isValid, errors },
+        formState: { errors },
         handleSubmit
     } = useForm<FeedbackFormFields>({
         resolver: yupResolver(schema),
@@ -20,8 +20,30 @@ export const FeedbackForm = () => {
     const handleSubmitForm: submitFormType<FeedbackFormFields> = async (
         data
     ): Promise<void> => {
-        console.log('data', data)
+        exportToJson(data);
     };
+
+    const exportToJson = (data : object) => {
+        // Set default file name
+        const fileName = "feedbackform";
+
+        // Convert string to json format
+        const formatedData = JSON.stringify(data, null, 2);
+
+        // Create new block instance and set type what to export
+        const blob = new Blob([formatedData], { type: "application/json" });
+
+        const href = URL.createObjectURL(blob);
+
+        // Type needed to create for exporting to file ex: Link
+        const createdLink = document.createElement("a");
+
+        createdLink.setAttribute('href', href);
+        createdLink.setAttribute('download', `${fileName}.json`)
+
+        document.body.appendChild(createdLink);
+        createdLink.click();
+    }
 
     return (
         <>
@@ -29,13 +51,13 @@ export const FeedbackForm = () => {
                 <form >
                     <InputGroup>
                         <label htmlFor="name" className="form-label">Name *</label>
-                        <Input {...register('name')} type="text" className="form-control" id="name" placeholder="John"/>
+                        <Input {...register('name')} type="text" className="form-control" id="name" />
                         {errors.name && <InvalidInput>{errors.name.message}</InvalidInput>}
                     </InputGroup>
 
                     <InputGroup>
                         <label htmlFor="email" className="form-label">Email address *</label>
-                        <Input {...register('email')} type="email" className="form-control" id="email" placeholder="name@example.com"/>
+                        <Input {...register('email')} type="email" className="form-control" id="email" />
                         {errors.email && <InvalidInput>{errors.email.message}</InvalidInput>}
                     </InputGroup>
 
@@ -46,8 +68,8 @@ export const FeedbackForm = () => {
                     </InputGroup>
 
                     <InputGroup>
-                        <label htmlFor="exampleFormControlTextarea1" className="form-label">Comments</label>
-                        <textarea {...register('comment')} className="form-control" id="exampleFormControlTextarea1" rows={3}></textarea>
+                        <label htmlFor="comment" className="form-label">Comments</label>
+                        <textarea {...register('comment')} className="form-control" id="comment" rows={3}></textarea>
                         {errors.comment && <InvalidInput>{errors.comment.message}</InvalidInput>}
                     </InputGroup>
 
@@ -67,6 +89,7 @@ const InputGroup = styled.div`
 
 const Input = styled.input`
   min-width: 350px;
+  
   &:focus {
     outline: 0;
     box-shadow: none;
