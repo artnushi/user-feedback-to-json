@@ -22,6 +22,10 @@ $ npm run install
 
 # Run app 
 $ npm run dev
+
+# The project will be hosted locally to  
+$ http://localhost:5173 or http://127.0.0.1:5173
+
 ```
 
 ## Build
