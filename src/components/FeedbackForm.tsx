@@ -92,7 +92,6 @@ const InputGroup = styled.div`
 `;
 
 const Input = styled.input`
-  //max-width: 100px;
 
   &:focus {
     outline: 0;
@@ -101,7 +100,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  min-width: 500px;
+  min-width: 400px;
 
   &:focus {
     outline: 0;
