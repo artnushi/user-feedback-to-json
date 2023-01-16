@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import { yupResolver } from '@hookform/resolvers/yup';
+import {yupResolver} from '@hookform/resolvers/yup';
 import {FeedbackFormFields, UseFeedbackFormSchema} from "./form_data/FeedbackFormData";
 import {useForm} from "react-hook-form";
 import {submitFormType} from "./form_data/types";
@@ -10,7 +10,7 @@ export const FeedbackForm = () => {
 
     const {
         register,
-        formState: { errors },
+        formState: {errors, isValid},
         handleSubmit,
         reset
     } = useForm<FeedbackFormFields>({
@@ -24,15 +24,15 @@ export const FeedbackForm = () => {
         exportToJson(data);
     };
 
-    const exportToJson = (data : object) => {
+    const exportToJson = (data: object) => {
         // Set default file name
-        const fileName = "feedbackform";
+        const fileName = "feedback_form";
 
         // Convert string to json format
-        const formatedData = JSON.stringify(data, null, 2);
+        const formattedData = JSON.stringify(data, null, 2);
 
         // Create new block instance and set type what to export
-        const blob = new Blob([formatedData], { type: "application/json" });
+        const blob = new Blob([formattedData], {type: "application/json"});
 
         const href = URL.createObjectURL(blob);
 
@@ -50,22 +50,23 @@ export const FeedbackForm = () => {
     return (
         <>
             <div className="mb-3">
-                <form >
+                <form>
                     <InputGroup>
                         <label htmlFor="name" className="form-label">Name *</label>
-                        <Input {...register('name')} type="text" className="form-control" id="name" />
+                        <Input {...register('name')} type="text" className="form-control" id="name"/>
                         {errors.name && <InvalidInput>{errors.name.message}</InvalidInput>}
                     </InputGroup>
 
                     <InputGroup>
                         <label htmlFor="email" className="form-label">Email address *</label>
-                        <Input {...register('email')} type="email" className="form-control" id="email" />
+                        <Input {...register('email')} type="email" className="form-control" id="email"/>
                         {errors.email && <InvalidInput>{errors.email.message}</InvalidInput>}
                     </InputGroup>
 
                     <InputGroup>
-                        <label htmlFor="rating" className="form-label">Rating * (1-5)</label>
-                        <Input {...register('rating')} type="number" className="form-control" id="rating" min="1" max="5" defaultValue="1" />
+                        <label htmlFor="rating" className="form-label">Rating (1-5) * </label>
+                        <Input {...register('rating')} type="number" className="form-control" id="rating" min="1"
+                               max="5" defaultValue="1"/>
                         {errors.rating && <InvalidInput>{errors.rating.message}</InvalidInput>}
                     </InputGroup>
 
@@ -75,10 +76,9 @@ export const FeedbackForm = () => {
                         {errors.comment && <InvalidInput>{errors.comment.message}</InvalidInput>}
                     </InputGroup>
 
-                    <Button type="button" className="btn btn-success" onClick={ handleSubmit(handleSubmitForm) } >
+                    <Button type="button" disabled={!isValid} className="btn btn-success"
+                            onClick={handleSubmit(handleSubmitForm)}>
                         Export to JSON
-                    </Button> <Button type="button" className="btn btn-success" onClick={ () =>reset() } >
-                        Reset form
                     </Button>
                 </form>
 
@@ -92,8 +92,8 @@ const InputGroup = styled.div`
 `;
 
 const Input = styled.input`
-  min-width: 350px;
-  
+  //max-width: 100px;
+
   &:focus {
     outline: 0;
     box-shadow: none;
@@ -101,7 +101,8 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  min-width: 350px;
+  min-width: 500px;
+
   &:focus {
     outline: 0;
     box-shadow: none;
