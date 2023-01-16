@@ -51,37 +51,48 @@ export const FeedbackForm = () => {
         <>
             <div className="mb-3">
                 <form>
-                    <InputGroup>
-                        <label htmlFor="name" className="form-label">Name *</label>
-                        <Input {...register('name')} type="text" className="form-control" id="name"/>
-                        {errors.name && <InvalidInput>{errors.name.message}</InvalidInput>}
-                    </InputGroup>
+                    <div className="row">
+                        <div className="col-12">
+                            <InputGroup>
+                                <label htmlFor="name" className="form-label">Name *</label>
+                                <Input {...register('name')} type="text" className="form-control" id="name"/>
+                                {errors.name && <InvalidInput>{errors.name.message}</InvalidInput>}
+                            </InputGroup>
+                        </div>
 
-                    <InputGroup>
-                        <label htmlFor="email" className="form-label">Email address *</label>
-                        <Input {...register('email')} type="email" className="form-control" id="email"/>
-                        {errors.email && <InvalidInput>{errors.email.message}</InvalidInput>}
-                    </InputGroup>
+                        <div className="col-12 col-md-10">
+                            <InputGroup>
+                                <label htmlFor="email" className="form-label">Email address *</label>
+                                <Input {...register('email')} type="email" className="form-control" id="email"/>
+                                {errors.email && <InvalidInput>{errors.email.message}</InvalidInput>}
+                            </InputGroup>
+                        </div>
 
-                    <InputGroup>
-                        <label htmlFor="rating" className="form-label">Rating (1-5) * </label>
-                        <Input {...register('rating')} type="number" className="form-control" id="rating" min="1"
-                               max="5" defaultValue="1"/>
-                        {errors.rating && <InvalidInput>{errors.rating.message}</InvalidInput>}
-                    </InputGroup>
+                        <div className="col-12 col-md-2">
+                            <InputGroup>
+                                <label htmlFor="rating" className="form-label">Rating (1-5) * </label>
+                                <Input {...register('rating')} type="number" className="form-control" id="rating" min="1"
+                                       max="5" defaultValue="1"/>
+                                {errors.rating && <InvalidInput>{errors.rating.message}</InvalidInput>}
+                            </InputGroup>
+                        </div>
 
-                    <InputGroup>
-                        <label htmlFor="comment" className="form-label">Comments</label>
-                        <textarea {...register('comment')} className="form-control" id="comment" rows={3}></textarea>
-                        {errors.comment && <InvalidInput>{errors.comment.message}</InvalidInput>}
-                    </InputGroup>
+                        <div className="col-12">
+                            <InputGroup>
+                                <label htmlFor="comment" className="form-label">Comments</label>
+                                <textarea {...register('comment')} className="form-control" id="comment" rows={3}></textarea>
+                                {errors.comment && <InvalidInput>{errors.comment.message}</InvalidInput>}
+                            </InputGroup>
+                        </div>
 
-                    <Button type="button" disabled={!isValid} className="btn btn-success"
-                            onClick={handleSubmit(handleSubmitForm)}>
-                        Export to JSON
-                    </Button>
+                        <div className="col-12">
+                            <Button type="button" disabled={!isValid} className="btn btn-success w-100"
+                                    onClick={handleSubmit(handleSubmitForm)}>
+                                Export to JSON
+                            </Button>
+                        </div>
+                    </div>
                 </form>
-
             </div>
         </>
     );
@@ -92,8 +103,6 @@ const InputGroup = styled.div`
 `;
 
 const Input = styled.input`
-  //max-width: 100px;
-
   &:focus {
     outline: 0;
     box-shadow: none;
@@ -101,8 +110,6 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  min-width: 500px;
-
   &:focus {
     outline: 0;
     box-shadow: none;
