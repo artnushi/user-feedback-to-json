@@ -11,7 +11,8 @@ export const FeedbackForm = () => {
     const {
         register,
         formState: { errors },
-        handleSubmit
+        handleSubmit,
+        reset
     } = useForm<FeedbackFormFields>({
         resolver: yupResolver(schema),
         mode: 'all',
@@ -43,6 +44,7 @@ export const FeedbackForm = () => {
 
         document.body.appendChild(createdLink);
         createdLink.click();
+        reset();
     }
 
     return (
@@ -75,6 +77,8 @@ export const FeedbackForm = () => {
 
                     <Button type="button" className="btn btn-success" onClick={ handleSubmit(handleSubmitForm) } >
                         Export to JSON
+                    </Button> <Button type="button" className="btn btn-success" onClick={ () =>reset() } >
+                        Reset form
                     </Button>
                 </form>
 
